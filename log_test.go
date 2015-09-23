@@ -19,4 +19,5 @@ func TestStdout(t *testing.T) {
 	logger := log.NewStdoutLogger("test", log.INFO)
 	logger.Debug("Should not display: %v", time.Now())
 	logger.Info("Hello: %v", time.Now())
+	logger.Info("Hello: %v", time.Now())
 }

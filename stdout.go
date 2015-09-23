@@ -5,13 +5,14 @@ import (
 )
 
 type StdoutLogger struct {
-	tag      string
-	priority Priority
+	tag       string
+	priority  Priority
+	priorityS string
 }
 
 func (p *StdoutLogger) write(priority Priority, format string, args ...interface{}) {
 	if p.priority >= priority {
-		log.Printf(format, args...)
+		log.Printf(p.priorityS+" "+format, args...)
 	}
 }
 
@@ -32,5 +33,18 @@ func (p *StdoutLogger) Notice(format string, args ...interface{}) {
 }
 
 func NewStdoutLogger(tag string, priority Priority) Logger {
-	return &StdoutLogger{tag: tag, priority: priority}
+	var priorityS string
+	switch priority {
+	case DEBUG:
+		priorityS = "DEBUG"
+	case INFO:
+		priorityS = "INFO"
+	case WARNING:
+		priorityS = "WARNING"
+	case NOTICE:
+		priorityS = "NOTICE"
+	case ERROR:
+		priorityS = "ERROR"
+	}
+	return &StdoutLogger{tag: tag, priority: priority, priorityS: priorityS}
 }
